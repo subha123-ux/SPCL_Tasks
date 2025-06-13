@@ -1,0 +1,95 @@
+body{
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.todo-container{
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1{
+    text-align: center;
+}
+
+.input-section{
+    display: flex;
+    gap: 10px;
+}
+
+input[type="text"]{
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #766b6b;
+    border-radius: 5px;
+}
+
+button{
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    background: #29ef5b;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover{
+    background: #0a7826;
+}
+
+@keyframes blink{
+    0% {opacity: 1;}
+    50% {opacity: 0.2;}
+    100%{opacity: 1;}
+}
+
+button:active{
+    animation: blink 0.3s ease;
+}
+
+ul{
+    list-style: none;
+    padding: 0;
+}
+
+li{
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+li.completed span{
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.filter-section{
+    margin: 15px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.clear-btn{
+    background: #1b4b27;
+}
+
+.footer{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.editable{
+    flex: 1;
+    margin-right: 10px;
+}
