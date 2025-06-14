@@ -13,7 +13,14 @@ function saveTasks() {
 }
 
 function renderTasks() {
+  document.getElementById("filterSelect").value=currentFilter;
   const taskList = document.getElementById("taskList");
+  const filter=document.getElementById("filterSelect").value;
+  const today=new Date().toISOString().split("T")[0];
+
+  tasks=tasks.filter(task=>task.due>=today);
+  saveTasks();
+
   taskList.innerHTML = "";
 
   const filteredTasks = tasks.filter(task => {
@@ -24,6 +31,7 @@ function renderTasks() {
 
   filteredTasks.forEach((task, index) => {
     const li = document.createElement("li");
+    if(task.completed) li.classList.add("completed");
     li.className = task.completed ? "completed" : "";
 
     const checkbox = document.createElement("input");
@@ -33,6 +41,12 @@ function renderTasks() {
       toggleComplete(index);
     });
 
+    const taskContent=document.createElement("div");
+    taskContent.style.display="flex";
+    taskContent.style.flexDirection="column";
+    taskContent.style.flex="1";
+    taskContent.style.marginRight="10px";
+
     const span = document.createElement("span");
     span.textContent = task.text;
     span.contentEditable = true;
@@ -40,6 +54,12 @@ function renderTasks() {
     span.addEventListener("blur", () => {
       updateTask(index, span.textContent);
     });
+
+    const taskDue=document.createElement("small");
+    taskDue.textContent=`${task.due}`;
+    taskDue.className="due-date";
+
+    taskContent.appendChild(taskDue);
 
     const delBtn = document.createElement("button");
     delBtn.textContent = "Delete";
@@ -49,6 +69,7 @@ function renderTasks() {
 
     li.appendChild(checkbox);
     li.appendChild(span);
+    li.appendChild(taskContent);
     li.appendChild(delBtn);
     taskList.appendChild(li);
   });
@@ -58,12 +79,18 @@ function renderTasks() {
 
 function addTask() {
   const input = document.getElementById("taskInput");
+  const dateInput=document.getElementById("dateInput");
   const text = input.value.trim();
-  if (text !== "") {
-    tasks.push({ text: text, completed: false });
+  const dueDate=dateInput.value;
+
+  if (text && dueDate) {
+    tasks.push({ text: text, completed: false, due: dueDate });
     input.value = "";
+    dateInput.value="";
     saveTasks();
     renderTasks();
+  }else{
+    alert("Please enter both task and date.")
   }
 }
 

@@ -79,6 +79,14 @@ li.completed span{
     justify-content: space-between;
 }
 
+.filter-section select{
+    padding: 10px;
+    border: 1px solid #332d2d;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
 .clear-btn{
     background: #1b4b27;
 }
