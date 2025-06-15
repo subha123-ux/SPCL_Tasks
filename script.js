@@ -1,11 +1,11 @@
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];      // Load tasks from localStorage or initialize empty array
-let currentFilter = 'all';     // Default filter is set to 'all'
+// Load tasks from localStorage or initialize empty array
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+let currentFilter = 'all';                  // Default filter is set to 'all'
 
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("taskInput").addEventListener("keypress", function (e) {
-    if (e.key === "Enter") addTask();      // Add task on Enter key press in input box
+    if (e.key === "Enter") addTask();           // Add task on Enter key press in input box
   });
-  // Change filter (all, active, completed) when dropdown changes
   document.getElementById("filterSelect").addEventListener("change", function () {
     setFilter(this.value);
   });
@@ -22,14 +22,17 @@ function renderTasks() {
   document.getElementById("filterSelect").value = currentFilter;
   const taskList = document.getElementById("taskList");
   const now = new Date();
+
+  // Remove past due tasks
+  tasks = tasks.filter(task => new Date(task.due) >= now);
+  saveTasks();
+
   taskList.innerHTML = "";
 
-  // Apply filtering logic without modifying the original array
   const filteredTasks = tasks.filter(task => {
-    const isFutureTask = new Date(task.due) >= now;
-    if (currentFilter === 'active') return !task.completed && isFutureTask;
+    if (currentFilter === 'active') return !task.completed;
     if (currentFilter === 'completed') return task.completed;
-    return isFutureTask || task.completed; // Show all future + completed tasks
+    return true;
   });
 
   // Loop through filtered tasks and add to DOM
@@ -52,7 +55,7 @@ function renderTasks() {
     taskContent.style.flex = "1";
     taskContent.style.marginRight = "10px";
 
-     // Editable task text
+    // Editable task text
     const span = document.createElement("span");
     span.textContent = task.text;
     span.contentEditable = true;
@@ -72,14 +75,14 @@ function renderTasks() {
     taskContent.appendChild(span);
     taskContent.appendChild(taskDue);
 
-     // Delete button
+    // Delete button
     const delBtn = document.createElement("button");
     delBtn.textContent = "Delete";
     delBtn.addEventListener("click", () => {
       deleteTask(index);
     });
 
-     // Append elements to task item
+    // Append elements to task item
     li.appendChild(checkbox);
     li.appendChild(taskContent);
     li.appendChild(delBtn);

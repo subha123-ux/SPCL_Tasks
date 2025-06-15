@@ -1,6 +1,6 @@
 body{
     font-family: Arial, sans-serif;
-    background: #38fb03;
+    background: hsl(119, 91%, 58%);
     margin: 0;
     padding: 20px;
     display: flex;
@@ -116,4 +116,23 @@ li.completed span{
 .editable{
     flex: 1;
     margin-right: 10px;
+}
+
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .input-group,
+  .controls {
+    flex-direction: column;
+  }
+
+  #taskList li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #taskList li button {
+    align-self: flex-end;
+    margin-top: 5px;
+  }
 }
