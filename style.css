@@ -1,6 +1,6 @@
 body{
     font-family: Arial, sans-serif;
-    background: hsl(119, 73%, 73%);
+    background: hsl(119, 47%, 38%);
     margin: 0;
     padding: 20px;
     display: flex;
@@ -124,7 +124,6 @@ li.completed span{
 .footer{
     display: flex;
     justify-content: space-between;
-    margin-top: 10px;
 }
 
 .editable{
